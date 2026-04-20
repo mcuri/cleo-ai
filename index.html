@@ -353,6 +353,75 @@
     }
     .send-btn:hover { background: var(--blue-dark); }
 
+    /* ── BOTTOM NAV (mobile only) ── */
+    #bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
+      z-index: 100;
+    }
+    .bnav-items {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .bnav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 500;
+      border: none;
+      background: none;
+      font-family: inherit;
+    }
+    .bnav-item.active { color: var(--blue); }
+    .bnav-icon { font-size: 18px; }
+    .bnav-item.locked { opacity: 0.45; }
+
+    /* ── RESPONSIVE (mobile) ── */
+    @media (max-width: 640px) {
+      body { flex-direction: column; overflow: hidden; }
+
+      #sidebar { display: none; }
+      #bottom-nav { display: block; }
+
+      #main { overflow: hidden; padding-bottom: calc(56px + env(safe-area-inset-bottom)); }
+
+      /* header */
+      .view-header { padding: 16px 16px 14px; }
+      .greeting { font-size: 18px; }
+
+      /* dashboard */
+      .dashboard-body { padding: 16px; }
+      .agent-cards { grid-template-columns: 1fr; }
+      .artifacts-strip { flex-direction: column; }
+      .artifact-chip { width: 100%; }
+
+      /* workspace */
+      .workspace-header { padding: 14px 16px 12px; }
+      .workspace-title { font-size: 15px; }
+      .chat-thread { padding: 16px; }
+      .msg-bubble { max-width: 85%; }
+      .artifact-card { max-width: 100%; }
+      .input-area { padding: 10px 12px 12px; }
+      .skill-pills { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+      .skill-pills::-webkit-scrollbar { display: none; }
+
+      /* profile */
+      .profile-body { padding: 12px; }
+    }
+
     /* ── LOCKED VIEW ── */
     .locked-view {
       flex: 1;
@@ -725,6 +794,25 @@
       </div>
     </div>
   </div>
+  <nav id="bottom-nav">
+    <div class="bnav-items">
+      <button class="bnav-item active" data-view="home" onclick="showView('home')">
+        <span class="bnav-icon">⌂</span>Dashboard
+      </button>
+      <button class="bnav-item" data-view="marketing" onclick="showView('marketing')">
+        <span class="bnav-icon">📢</span>Marketing
+      </button>
+      <button class="bnav-item" data-view="finance" onclick="showView('finance')">
+        <span class="bnav-icon">💰</span>Finanças
+      </button>
+      <button class="bnav-item locked" data-view="hr" onclick="showView('hr')">
+        <span class="bnav-icon">👥</span>RH
+      </button>
+      <button class="bnav-item" data-view="profile" onclick="showView('profile')">
+        <span class="bnav-icon">👤</span>Perfil
+      </button>
+    </div>
+  </nav>
   <script>
     function showView(name) {
       // update views
@@ -734,6 +822,10 @@
       document.querySelectorAll('.nav-item[data-view]').forEach(a => a.classList.remove('active'));
       const link = document.querySelector('.nav-item[data-view="' + name + '"]');
       if (link) link.classList.add('active');
+      // update bottom nav active state
+      document.querySelectorAll('.bnav-item[data-view]').forEach(a => a.classList.remove('active'));
+      const blink = document.querySelector('.bnav-item[data-view="' + name + '"]');
+      if (blink) blink.classList.add('active');
       // scroll main to top
       document.getElementById('main').scrollTop = 0;
     }

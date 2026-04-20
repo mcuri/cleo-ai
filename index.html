@@ -356,14 +356,10 @@
     /* ── BOTTOM NAV (mobile only) ── */
     #bottom-nav {
       display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
       background: var(--white);
       border-top: 1px solid var(--border);
       padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
-      z-index: 100;
+      flex-shrink: 0;
     }
     .bnav-items {
       display: flex;
@@ -397,13 +393,13 @@
       #bottom-nav { display: block; }
 
       #main { overflow: hidden; }
-      .input-area { padding-bottom: calc(12px + 56px + env(safe-area-inset-bottom)); }
 
       /* header */
       .view-header { padding: 16px 16px 14px; }
       .greeting { font-size: 18px; }
 
       /* dashboard */
+      .dashboard-body { padding: 16px; }
       .agent-cards { grid-template-columns: 1fr; }
       .artifacts-strip { flex-direction: column; }
       .artifact-chip { width: 100%; }
@@ -419,8 +415,7 @@
       .skill-pills::-webkit-scrollbar { display: none; }
 
       /* profile */
-      .profile-body { padding: 12px 12px calc(12px + 56px + env(safe-area-inset-bottom)); }
-      .dashboard-body { padding: 16px 16px calc(16px + 56px + env(safe-area-inset-bottom)); }
+      .profile-body { padding: 12px; }
     }
 
     /* ── LOCKED VIEW ── */

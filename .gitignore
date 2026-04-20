@@ -1,0 +1,6 @@
+credentials.json
+token.json
+.superpowers/
+.claude/
+export_to_gdoc.py
+fazai-smb-design.html
